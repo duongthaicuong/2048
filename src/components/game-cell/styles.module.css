@@ -1,0 +1,34 @@
+.cell {
+    background-color: rgba(238, 228, 218, 0.35);
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+}
+
+.span2 {
+    background-color: #EEE1C9;
+}
+
+.value {
+    font-weight: bold;
+    font-size: 55px;
+    color: #776E65;
+    background-color: #EEE4DA;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    animation: show 200ms ease-in-out;
+}
+
+@keyframes show {
+    0% {
+        opacity: 0.5;
+        transform: scale(0);
+    }
+}
