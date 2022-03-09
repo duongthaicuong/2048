@@ -5,7 +5,7 @@ const GameCell = (props: { value?: number }) => {
   const { value } = props;
   return (
     <div className={`${styles["cell"]}`}>
-      {value && <div className={styles['value']}>{value}</div>}
+      {!!value && <div className={styles['value']}>{value}</div>}
     </div>
   );
 };
