@@ -38,7 +38,6 @@ export const mergeCell = (a: number, b: number): number[] => {
 
 export const moveDown = (array: number[]) : number[] => {
     for(let i =0; i <= 11; i++) {
-        console.log(mergeCell(array[i], array[i+4]))
         const [a, b] = mergeCell(array[i], array[i+4])
         array[i] = a;
         array[i+4] = b 
@@ -48,7 +47,6 @@ export const moveDown = (array: number[]) : number[] => {
 
 export const moveUp = (array: number[]) : number[] => {
     for(let i = 15; i >= 4; i--) {
-        console.log(mergeCell(array[i], array[i-4]))
         const [a, b] = mergeCell(array[i], array[i-4])
         array[i] = a;
         array[i-4] = b 
@@ -81,6 +79,7 @@ export const moveLeft = (array: number[]) : number[] => {
 
 const GameBoard = (): JSX.Element => {
   const [boards, setBoards] = useState<number[]>(randomBoard(LENGTH));
+  const [end, setEnd] = useState(false)
 
   useEffect(() => {
     // console.log({boards})
@@ -115,7 +114,25 @@ const GameBoard = (): JSX.Element => {
       onMoveRight()
       onMoveRight()
     }
+    if (canRandom()) {
+      randomOnce()
+    } else {
+      setEnd(true)
+    }
   };
+
+  const canRandom = () => {
+    return boards.some((value) => value === 0)
+  }
+
+  const randomOnce = () => {
+    const value = (getRandomInt(2) + 1) * 2
+    let index: number
+    do {
+      index = getRandomInt(LENGTH)
+    } while (boards[index] !== 0);
+    setBoards(preBoards => preBoards.map((cell, i) => i === index ? value : cell))
+  }
 
   const onMoveDown = () => {
     setBoards([...moveDown(boards)])
@@ -135,6 +152,7 @@ const GameBoard = (): JSX.Element => {
 
   return (
     <>
+      {end && <p>End game!</p>}
       <div tabIndex={0} className={styles.container} onKeyDown={handleKeyDown}>
         {boards.map((cell, index) => (
           <GameCell key={index} index={index} value={cell} />
